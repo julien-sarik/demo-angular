@@ -28,6 +28,9 @@ Create a local workspace and install necessary npm dependencies into the local `
 ### serve
 Spin up a local server serving the local directory. The application will automatically reload if you change any of the source files.
 `ng serve`
+### generate
+generate new component files into the src/app directory:  
+`ng generate component home --standalone --inline-template --skip-tests`
 ## NPM
 ### install
 `npm install` install the required dependencies into the local `node_modules` directory.
@@ -35,8 +38,9 @@ Spin up a local server serving the local directory. The application will automat
 ### build
 `podman build . -t angular:latest`
 ### run
-`podman run --rm --name angular-demo -p 8080:4200 -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
-
+`podman run --rm -d --name angular-demo -p 8080:4200 -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
+### develop
+Invoke Angular CLI from a container by prefixing commands with `podman run --rm -v ${PWD}:/my-app angular:latest `
 
 
 
