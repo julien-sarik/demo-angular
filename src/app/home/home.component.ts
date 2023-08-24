@@ -18,7 +18,10 @@ import { HousingLocation } from '../housinglocation';
     </form>
   </section>
   <section class="results">
-    <app-housing-location></app-housing-location>
+    <!-- the [attribute]="value" syntax is the Angular property binding.
+      The left handside is the property from the inner component.
+      The right handside is the name of the instance to assign from the outter component --> 
+    <app-housing-location [housingLocation]="housingLocation"></app-housing-location>
   </section>
 `,
   styleUrls: ['./home.component.css']
