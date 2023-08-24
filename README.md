@@ -33,6 +33,8 @@ generate new component files into the `src/app` directory:
 `ng generate component home --standalone --inline-template --skip-tests`
 generate a new interface into the `src/app` directory:
 `ng generate interface housinglocation`
+generate a housing service
+`ng generate service housing --skip-tests`
 ## NPM
 ### install
 `npm install` install the required dependencies into the local `node_modules` directory.
