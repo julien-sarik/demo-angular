@@ -29,8 +29,10 @@ Create a local workspace and install necessary npm dependencies into the local `
 Spin up a local server serving the local directory. The application will automatically reload if you change any of the source files.
 `ng serve`
 ### generate
-generate new component files into the src/app directory:  
+generate new component files into the `src/app` directory:  
 `ng generate component home --standalone --inline-template --skip-tests`
+generate a new interface into the `src/app` directory:
+`ng generate interface housinglocation`
 ## NPM
 ### install
 `npm install` install the required dependencies into the local `node_modules` directory.
