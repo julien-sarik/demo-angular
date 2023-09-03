@@ -39,6 +39,7 @@ generate a housing service
 ### install
 `npm install` install the required dependencies into the local `node_modules` directory.
 ## Podman
+First follow the [rest-api readme file](rest-api/README.md) to run the REST server.
 ### build
 `podman build . -t angular:latest`
 ### run
