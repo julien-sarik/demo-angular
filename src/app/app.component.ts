@@ -19,7 +19,7 @@ import { HomeComponent } from './home/home.component';
       <section class="content">
         <router-outlet></router-outlet>
       </section>
-    </main>
+      </main>
 `,
   styleUrls: ['./app.component.css'],
 })
