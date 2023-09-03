@@ -14,8 +14,12 @@ import { HousingService } from '../housing.service';
   template: `
   <section>
     <form>
-      <input type="text" placeholder="Filter by city">
-      <button class="primary" type="button">Search</button>
+      <!-- 
+        the '#var' syntax allows to refer to the 'filter' variable further down the template
+        i.e. as parameter of the search button event handler
+      -->
+      <input type="text" placeholder="Filter by city" #filter>
+      <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
     </form>
   </section>
   <section class="results">
@@ -24,7 +28,7 @@ import { HousingService } from '../housing.service';
       The right handside is the name of the instance to assign from the outter component 
     --> 
     <app-housing-location
-      *ngFor="let housingLocation of housingLocationList"
+      *ngFor="let housingLocation of filteredLocationList"
       [housingLocation]="housingLocation">
     </app-housing-location>
   </section>
@@ -33,9 +37,21 @@ import { HousingService } from '../housing.service';
 })
 export class HomeComponent {
   housingLocationList: HousingLocation[] = [];
+  filteredLocationList: HousingLocation[] = [];
   housingService: HousingService = inject(HousingService);
   
   constructor() {
     this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.filteredLocationList = this.housingLocationList;
+  }
+
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredLocationList = this.housingLocationList;
+    }
+  
+    this.filteredLocationList = this.housingLocationList.filter(
+      housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
   }
 }
