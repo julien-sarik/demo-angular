@@ -1,4 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+// import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { HousingLocation } from './housinglocation';
 
 // An Angular service is injectable to be used by other components
@@ -7,17 +11,16 @@ import { HousingLocation } from './housinglocation';
 })
 export class HousingService {
   readonly url = 'http://localhost:8081/locations';
+  http = inject(HttpClient);
 
   constructor() { }
 
-  async getAllHousingLocations(): Promise<HousingLocation[]> {
-    const data = await fetch(this.url);
-    return await data.json() ?? [];
+  getAllHousingLocations(): Observable<HousingLocation[]> {
+    return this.http.get<HousingLocation[]>(this.url, {observe: 'body', responseType: 'json'});
   }
   
-  async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
-    const data = await fetch(`${this.url}/${id}`);
-    return await data.json() ?? {};
+  getHousingLocationById(id: number): Observable<HousingLocation | undefined> {
+    return this.http.get<HousingLocation>(`${this.url}/${id}`, {observe: 'body', responseType: 'json'});
   }
   
   submitApplication(firstName: string, lastName: string, email: string) {
