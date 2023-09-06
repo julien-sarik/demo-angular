@@ -1,0 +1,33 @@
+_format_version: "3.0"
+
+services:
+- name: rest-api
+  url: http://localhost:3000
+  plugins:
+  - name: jwt
+  routes:
+  - name: my-route
+    paths:
+    - /
+
+consumers:
+- username: spa
+
+jwt_secrets:
+- consumer: spa
+  # used by the jwt Kong plugin to validate the issuer claim
+  key: https://accounts.google.com
+  algorithm: RS256
+  # this is regularly rotated by Google.
+  # it is served by https://www.googleapis.com/oauth2/v3/certs
+  rsa_public_key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhsYvCPtkUV7SIxwkOkJs
+    JfhwV/CMdXU5i0UmY2QEs+Pa7v0+0y+s4EjEDtsQ8Yow6hc670JhkGBcMzhU4Dtr
+    qNGROXebyOse5FX0m0UvWo1qXqNTf28uBKB990mY42Icr8sGjtOw8ajyT9kufbmX
+    i3eZKagKpG0TDGK90oBEfoGzCxoFT87F95liNth/GoyU5S8+G3OqIqLlQCwxkI5s
+    +g2qvg/aooALfh1rhvx2wt4EJVMSrdnxtPQSPAtZBiw5SwCnVglc6OnalVNvAB2J
+    ArbqC9GAzzz9pApAk28SYg5a4hPiPyqwRv+4X1CXEK8bO5VesIeRX0oDf7UoM+pV
+    AwIDAQAB
+    -----END PUBLIC KEY-----
+    
