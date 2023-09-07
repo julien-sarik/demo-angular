@@ -6,15 +6,18 @@ import { bootstrapApplication,provideProtractorTestingSupport } from '@angular/p
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import routeConfig from './app/routes';
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { httpInterceptorProviders } from './app/http/http-interceptor.provider';
+
 
 bootstrapApplication(AppComponent,
   {
     providers: [
       provideProtractorTestingSupport(),
       provideRouter(routeConfig),
-      provideHttpClient(),
+      httpInterceptorProviders,
+      provideHttpClient(withInterceptorsFromDi()),
       provideOAuthClient()
     ]
   }
