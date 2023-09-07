@@ -10,6 +10,14 @@ services:
     paths:
     - /
 
+# to remove once using BFF
+plugins:
+- name: cors
+  service: rest-api
+  config:
+    origins:
+    - '*'
+
 consumers:
 - username: spa
 

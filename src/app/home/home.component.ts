@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../housinglocation';
 import { HousingService } from '../housing.service';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,16 @@ import { HousingService } from '../housing.service';
     HousingLocationComponent
   ],
   template: `
+
+  <div *ngIf="authenticationService.userName">
+    <p>Hello {{ authenticationService.userName }}</p>
+  </div>
+  <div *ngIf="!authenticationService.userName">      
+    <p>
+      <button (click)="authenticationService.login()">Login</button>
+    </p>
+  </div>
+
   <section>
     <form>
       <!-- 
@@ -38,7 +49,8 @@ import { HousingService } from '../housing.service';
 export class HomeComponent {
   housingLocationList: HousingLocation[] = [];
   filteredLocationList: HousingLocation[] = [];
-  housingService: HousingService = inject(HousingService);
+  readonly housingService: HousingService = inject(HousingService);
+  readonly authenticationService: AuthenticationService = inject(AuthenticationService);
   
   constructor() {
     this.housingService.getAllHousingLocations().subscribe((housingLocationList: HousingLocation[]) => {
