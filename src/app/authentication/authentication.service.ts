@@ -30,4 +30,10 @@ export class AuthenticationService {
   // refresh() {
   //   this.oauthService.refreshToken();
   // }
+
+  logout() {
+    // clear stored access tokens then redirect the user to 
+    // the configured auth server's logout endpoint if any
+    this.oauthService.logOut();
+  }
 }

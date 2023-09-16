@@ -16,6 +16,9 @@ import { AuthenticationService } from '../authentication/authentication.service'
 
   <div *ngIf="authenticationService.userName">
     <p>Hello {{ authenticationService.userName }}</p>
+    <p>
+      <button (click)="authenticationService.logout()">Logout</button>
+    </p>
   </div>
   <div *ngIf="!authenticationService.userName">      
     <p>
