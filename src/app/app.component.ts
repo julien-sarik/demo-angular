@@ -32,6 +32,7 @@ export class AppComponent {
     // initialize the oauth library
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.setupAutomaticSilentRefresh();
   }
 
 }
