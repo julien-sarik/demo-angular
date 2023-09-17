@@ -23,5 +23,6 @@ export const authCodeFlowConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  strictDiscoveryDocumentValidation: false
+  strictDiscoveryDocumentValidation: false,
+  customQueryParams: {'access_type':'offline', 'prompt':'consent'}
 };
