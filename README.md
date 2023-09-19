@@ -39,10 +39,13 @@ generate a housing service
 ### install
 `npm install` install the required dependencies into the local `node_modules` directory.
 ## Podman
-First follow the [rest-api readme file](rest-api/README.md) to run the REST server.
 ### build
 `podman build . -t angular:latest`
 ### run
+First run the following dependencies:
+- [keycloak readme file](keycloak/README.md) to run the authorization server
+- [rest-api readme file](rest-api/README.md) to run the REST API secured by the authorization server.
+
 `podman run --rm -d --name angular-demo -p 8080:4200 -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
 ### develop
 Invoke Angular CLI from a container by prefixing commands with `podman run --rm -v ${PWD}:/my-app angular:latest `

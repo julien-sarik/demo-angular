@@ -1,5 +1,2 @@
 .vscode
 /node_modules
-
-# contains authorization server's secret
-src/app/authentication/oauth.config.ts
