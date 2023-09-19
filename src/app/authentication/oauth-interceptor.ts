@@ -11,7 +11,7 @@ export class OauthInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!this.shouldAddToken(req.url.toLowerCase())) return next.handle(req);
 
-    let header = 'Bearer ' + this.authStorage.getItem('id_token');
+    let header = 'Bearer ' + this.authStorage.getItem('access_token');
     let headers = req.headers.set('Authorization', header);
     req = req.clone({ headers });
 

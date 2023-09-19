@@ -1,5 +1,5 @@
 # introduction
-This image exposes REST API from the mock json-server. The API is exposed by a Kong gateway and secured by JWT tokens signed by Google.  
+This image exposes REST API from the mock json-server. The API is exposed by a Kong gateway and secured by JWT tokens signed by Keycloak (public key must be configured into the deployment).  
 The mock server and the Kong gateway are running in the same pod.
 
 # build
