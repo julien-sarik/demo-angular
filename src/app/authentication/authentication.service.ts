@@ -1,39 +1,30 @@
-import { Injectable, inject } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { bffConfig } from '../bff/bff.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  readonly oauthService: OAuthService = inject(OAuthService)
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   get userName(): string {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) return '';
-    return claims['given_name'];
+    const claims = sessionStorage.getItem('claims');
+    return claims != null ? JSON.parse(claims)['preferred_username']: '';
   }
 
   login() {
-    this.oauthService.initCodeFlow();
+    this.http.post<any>(`${bffConfig.url}/login/start`, null)
+      // redirect the browser using global native browser window object
+      .subscribe(resp => window.location.href = resp['authorizationRequestUrl']);
   }
 
-  // get idToken(): string {
-  //   return this.oauthService.getIdToken();
-  // }
-
-  // get accessToken(): string {
-  //   return this.oauthService.getAccessToken();
-  // }
-
-  // refresh() {
-  //   this.oauthService.refreshToken();
-  // }
-
   logout() {
-    // clear stored access tokens then redirect the user to 
-    // the configured auth server's logout endpoint if any
-    this.oauthService.logOut();
+    // clear user data 
+    sessionStorage.clear();
+    this.http.post<any>(`${bffConfig.url}/logout`, null)
+      // redirect the user to the configured auth server's logout endpoint
+      .subscribe(resp => window.location.href = resp.url);
   }
 }

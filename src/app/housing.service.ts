@@ -10,7 +10,7 @@ import { HousingLocation } from './housinglocation';
   providedIn: 'root'
 })
 export class HousingService {
-  readonly url = 'http://localhost:8081/locations';
+  readonly url = 'http://localhost:8080/api/locations';
   http = inject(HttpClient);
 
   constructor() { }

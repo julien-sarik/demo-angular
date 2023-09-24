@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from './authentication/oauth.config';
 
 @Component({
   selector: 'app-root',
@@ -27,11 +25,4 @@ import { authCodeFlowConfig } from './authentication/oauth.config';
 })
 export class AppComponent {
   title = 'homes';
-
-  constructor(private oauthService: OAuthService) {
-    // initialize the oauth library
-    this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
-  }
-
 }
