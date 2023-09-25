@@ -1,0 +1,38 @@
+_format_version: '3.0'
+_transform: true
+
+services:
+# the static files of the SPA are loaded through the BFF gateway
+- name: webhost
+  url: http://spa:4200
+  routes:
+  - name: webhost-api-route
+    paths:
+    - /
+# the route for the OAuth Agent is seen by the SPA as http://{bff-domain}/oauth-agent
+- name: oauth-agent
+  url: http://oauth-agent:7081/oauth-agent
+  routes:
+  - name: oauth-agent-api-route
+    paths:
+    - /oauth-agent
+  plugins:
+  - name: file-log
+    config:
+      path: /dev/stdout
+# the route for the business API is seen by the SPA as http://{bff-domain}/api
+- name: business-api
+  url: http://rest-api:8000
+  routes:
+  - name: business-api-route
+    paths:
+    - /api
+  plugins:
+  # the OAuth proxy plugin decrypts the secure cookie and forwards the access token to the API endpoint
+  - name: oauth-proxy
+    config:
+      cookie_name_prefix: example
+      encryption_key: f2f31006f908c35ed49e6166f60f18c4fa1b34b93adb7ba722e28101a28092f0
+      trusted_web_origins:
+      - http://localhost:8080
+      cors_enabled: false
