@@ -10,14 +10,6 @@ services:
     paths:
     - /
 
-# to remove once using BFF
-plugins:
-- name: cors
-  service: rest-api
-  config:
-    origins:
-    - '*'
-
 consumers:
 - username: spa
 
@@ -28,11 +20,11 @@ jwt_secrets:
   algorithm: RS256
   rsa_public_key: |
     -----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwx1ZBqAXyy0OdGIYG3Z0
-    WY4rWutzIG8AfTIxP0EwTPDMFZjh/GlP1xI2JfJxy3aKa74oeYtaWgJohlMn+hCy
-    RKu02hGHPW4vjwB4nmRXd+GOYbW7SKzw81FTYje2GwcLLGruMfmCsiufq8G1jmzQ
-    rz5Ojg4faDKDXh85QjnlzuTpDjLqCl0DoZkHLQ73ecLBPzf1zlQ3W1HifQ1529QI
-    iiBqhabTjLMk6SNF2b3FBb9cl6Uvf4f3ZOOnoJNhnuY23amDpFm6iuzaAIT5TdSK
-    WGSjnwbboVPSAqtnIk+SfteUf4OSx2ijgra9UUDH2A0O2c1T01DUUEPpc/MuBTO3
-    dQIDAQAB
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmwLtHn3IDmlEEnH4Q6NS
+    5FliuDo4BhcmCTiuAV7QEIrIeMHOQqDk5lGnmlzXSQ2ZHLPs/4ptOVDmUM2YZUyb
+    z7lSaEh7W2KAsDISvs5LnAY41Kr+fwoxIxi9AMJf8F2a1+vQeSBvaPQDZ64XhEDo
+    VBTzZJcs+gzqkx6AUC/FWPlaX4rk5SB8BUjDnR4G8sPmdxPGC7FXJ70Gp7OA4+a4
+    FEnGGVjbbjDtet9CFXxAjOyu9YcteZnFV1js/4+xcBMw93g48BgIAdVxPUWPV7uA
+    ZX2drLeqPFgNhha6aLLDOYZrss6woTVfmSPzx60SPAoBMzXra6XbsISfVR+PF9Hu
+    ZwIDAQAB
     -----END PUBLIC KEY-----

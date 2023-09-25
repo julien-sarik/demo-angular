@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
+import { OauthCallbackComponent } from './oauth-callback/oauth-callback.component';
 
 const routeConfig: Routes = [
     {
@@ -12,6 +13,11 @@ const routeConfig: Routes = [
       path: 'details/:id',
       component: DetailsComponent,
       title: 'Home details'
+    },
+    {
+      path: 'callback',
+      component: OauthCallbackComponent,
+      title: 'Authentication'
     }
   ];
   

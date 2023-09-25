@@ -45,7 +45,72 @@ generate a housing service
 First run the following dependencies:
 - [keycloak readme file](keycloak/README.md) to run the authorization server
 - [rest-api readme file](rest-api/README.md) to run the REST API secured by the authorization server.
+- [bff readme file](bff/README.md) to run the BFF
 
-`podman run --rm -d --name angular-demo -p 8080:4200 -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
+`podman run --rm -d --name spa --net foo -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
 ### develop
 Invoke Angular CLI from a container by prefixing commands with `podman run --rm -v ${PWD}:/my-app angular:latest `
+
+# architecture
+```mermaid
+sequenceDiagram
+  participant UA as user agent
+  box rgba(0, 150, 0, .2) backend for frontend
+  participant BFF as BFF gateway
+  participant OA as oauth agent
+  participant OP as oauth proxy
+  end
+  participant SPA as SPA
+  participant AS as authorization server
+  participant REST as REST API
+  rect rgba(0, 0, 255, .3)
+  Note over UA: load SPA
+  UA->>+BFF: GET /
+  BFF->>SPA: GET SPA's static code
+  BFF->-UA: load SPA
+  end
+  rect rgba(255, 0, 0, .3)
+  Note over UA: initiate login
+  UA->>+BFF: POST /oauth-agent/login/start
+  BFF->>OA: POST /oauth-agent/login/start
+  OA->BFF: return authorize endpoint
+  BFF->-UA: return authorize endpoint
+  UA->>AS: GET /authorize
+  AS->UA: return login page
+  UA->>AS: POST user credentials
+  AS->>UA: redirect to oauth client
+  UA->>+BFF: POST /oauth-agent/login/end
+  BFF->>OA: POST /oauth-agent/login/end
+  OA->>AS: POST authorization code
+  AS->OA: return access/ID/refresh tokens
+  OA->>OA: encrypt tokens
+  OA->BFF: return encrypted tokens as cookies
+  BFF->-UA: return encrypted tokens as cookies
+  UA->>+BFF: GET /oauth-agent/claims
+  BFF->>OA: GET /oauth-agent/claims
+  OA->>OA: read claims from encrypted ID token cookie
+  OA->BFF: return ID token claims
+  BFF->-UA: return ID token claims
+  UA->>UA: store ID token claims
+  end
+  rect rgba(0, 255, 0, .3)
+  Note over UA: use APIS
+  UA->>BFF: GET /api
+  BFF->>OP: GET /api
+  OP->>OP: read access token from encrypted cookie
+  OP->>REST: proxy API request with access token
+  end
+  rect rgba(0, 255, 255, .3)
+  Note over UA: logout
+  UA->>UA: clear storage
+  UA->>+BFF: POST /oauth-agent/logout
+  BFF->>OA: POST /oauth-agent/logout
+  OA->BFF: return authorization server's logout URL
+  BFF->>-UA: return authorization server's logout URL
+  UA->>AS: GET /logout
+  AS->>UA: return logout page confirmation
+  UA->>AS: confirm logout
+  AS->>AS: end user's session
+  AS->>UA: clear SSO cookies and return to post-logout URL
+  end
+```
