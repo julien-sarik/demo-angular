@@ -1,0 +1,22 @@
+# Created with podman-4.6.2 generate kube
+apiVersion: v1
+kind: Pod
+metadata:
+  name: keycloak
+spec:
+  containers:
+  - args:
+    - start-dev
+    env:
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      value: Password1
+    - name: KEYCLOAK_ADMIN
+      value: admin
+    image: quay.io/keycloak/keycloak:22.0.3
+    name: keycloak
+    ports:
+    - containerPort: 8080
+      hostPort: 9080
+    securityContext:
+      runAsNonRoot: true
+

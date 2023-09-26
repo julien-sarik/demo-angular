@@ -1,0 +1,80 @@
+# Created with podman-4.6.2 generate kube
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bff
+spec:
+  containers:
+  - args:
+    - kong
+    - docker-start
+    env:
+    - name: KONG_PROXY_LISTEN
+      value: 0.0.0.0:3000
+    - name: KONG_LOG_LEVEL
+      value: info
+    - name: KONG_NGINX_PROXY_PROXY_BUFFER_SIZE
+      value: 160k
+    - name: KONG_NGINX_PROXY_PROXY_BUFFERS
+      value: 64 160k
+    - name: KONG_DECLARATIVE_CONFIG
+      value: /kong.yml
+    - name: KONG_DATABASE
+      value: "off"
+    - name: KONG_PLUGINS
+      value: bundled,oauth-proxy
+    image: localhost/oauth-proxy:latest
+    name: kong-oauth-proxy
+    ports:
+    - containerPort: 3000
+      hostPort: 8080
+    securityContext: {}
+    volumeMounts:
+    - mountPath: /kong.yml
+      name: kong-config
+  - args:
+    - java
+    - -jar
+    - -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+    - /usr/api/oauth-agent-0.0.1-SNAPSHOT.jar
+    env:
+    - name: POST_LOGOUT_REDIRECT_URI
+      value: http://localhost:8080
+    - name: COOKIE_NAME_PREFIX
+      value: example
+    - name: ISSUER
+      value: http://localhost:9080/realms/master
+    - name: CLIENT_SECRET
+      value: qtsEno5xcdUf2tW3t6R5anHy3ggREWk0
+    - name: CORS_ENABLED
+      value: "false"
+    - name: TOKEN_ENDPOINT
+      value: http://keycloak:8080/realms/master/protocol/openid-connect/token
+    - name: COOKIE_ENCRYPTION_KEY
+      value: f2f31006f908c35ed49e6166f60f18c4fa1b34b93adb7ba722e28101a28092f0
+    - name: USERINFO_ENDPOINT
+      value: http://keycloak:8080/realms/master/protocol/openid-connect/userinfo
+    - name: CLIENT_ID
+      value: angular
+    - name: AUTHORIZE_ENDPOINT
+      value: http://localhost:9080/realms/master/protocol/openid-connect/auth
+    - name: TRUSTED_WEB_ORIGIN
+      value: http://localhost:8080
+    - name: REDIRECT_URI
+      value: http://localhost:8080/callback
+    - name: PORT
+      value: "7081"
+    - name: LOGOUT_ENDPOINT
+      value: http://localhost:9080/realms/master/protocol/openid-connect/logout
+    - name: COOKIE_DOMAIN
+      value: localhost
+    - name: SCOPE
+      value: openid profile
+    image: localhost/oauthagent:latest
+    name: oauth-agent
+  volumes:
+  - hostPath:
+      path: ./bff/oauth-proxy/kong.yml
+      type: File
+    name: kong-config
+

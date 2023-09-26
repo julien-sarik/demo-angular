@@ -42,12 +42,12 @@ generate a housing service
 ### build
 `podman build . -t angular:latest`
 ### run
-First run the following dependencies:
-- [keycloak readme file](keycloak/README.md) to run the authorization server
-- [rest-api readme file](rest-api/README.md) to run the REST API secured by the authorization server.
-- [bff readme file](bff/README.md) to run the BFF
+First run the following dependencies (stop with `podman play kube pod.yml --down`):
+- `podman play kube keycloak/pod.yml --net foo` to run the authorization server
+- `podman play kube rest-api/pod.yml --net foo` to run the REST API secured by the authorization server.
+- `podman play kube bff/pod.yml --net foo --context-dir=./bff --build=true` to build and run the BFF or simply `podman play kube bff/pod.yml --net foo` if images are already built
 
-`podman run --rm -d --name spa --net foo -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`
+`podman run --rm -d --name spa --net foo -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`  
 ### develop
 Invoke Angular CLI from a container by prefixing commands with `podman run --rm -v ${PWD}:/my-app angular:latest `
 

@@ -1,0 +1,36 @@
+# Created with podman-4.6.2 generate kube
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rest-api
+spec:
+  containers:
+  - args:
+    - kong
+    - docker-start
+    env:
+    - name: KONG_DATABASE
+      value: "off"
+    - name: KONG_PROXY_LISTEN
+      value: 0.0.0.0:8000
+    - name: KONG_DECLARATIVE_CONFIG
+      value: kong.yml
+    image: docker.io/library/kong:3.3.1-alpine
+    name: kong
+    volumeMounts:
+    - mountPath: /kong.yml
+      name: kong-config
+  - args:
+    - json-server
+    - --watch
+    - data.json
+    - --host
+    - 0.0.0.0
+    image: localhost/rest-api:latest
+    name: rest
+  volumes:
+  - hostPath:
+      path: ./rest-api/kong.yml
+      type: File
+    name: kong-config
+
