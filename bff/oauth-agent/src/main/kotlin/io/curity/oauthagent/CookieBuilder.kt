@@ -15,7 +15,7 @@ class CookieBuilder(
     suspend fun createCookies(response: TokenResponse, csrfCookieValue: String): List<String> {
 
         val cookiesList = mutableListOf<String>()
-        cookiesList.add(cookieEncrypter.getEncryptedCookie(cookieName.csrf, csrfCookieValue))
+        cookiesList.add(cookieEncrypter.getEncryptedCookie(cookieName.csrf, csrfCookieValue, idTokenOptions.copy(path = "/", httpOnly = false)))
         cookiesList.add(cookieEncrypter.getCookieForUnset(cookieName.tempLoginData))
         addTokensToCookies(cookiesList, response)
         return cookiesList
