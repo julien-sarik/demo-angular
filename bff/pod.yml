@@ -45,7 +45,7 @@ spec:
     - name: ISSUER
       value: http://localhost:9080/realms/master
     - name: CLIENT_SECRET
-      value: qtsEno5xcdUf2tW3t6R5anHy3ggREWk0
+      value: o5rWC6xzzJB9fYOVjw97IAu2980haWTP
     - name: CORS_ENABLED
       value: "false"
     - name: TOKEN_ENDPOINT
@@ -70,8 +70,11 @@ spec:
       value: localhost
     - name: SCOPE
       value: openid profile
-    image: localhost/oauthagent:latest
+    image: localhost/oauth-agent:latest
     name: oauth-agent
+    ports:
+    - containerPort: 8000
+      hostPort: 8000
   volumes:
   - hostPath:
       path: ./bff/oauth-proxy/kong.yml
