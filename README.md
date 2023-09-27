@@ -45,7 +45,7 @@ generate a housing service
 First run the following dependencies (stop with `podman play kube pod.yml --down`):
 - `podman play kube keycloak/pod.yml --net foo` to run the authorization server
 - `podman play kube rest-api/pod.yml --net foo` to run the REST API secured by the authorization server.
-- `podman play kube bff/pod.yml --net foo --context-dir=./bff --build=true` to build and run the BFF or simply `podman play kube bff/pod.yml --net foo` if images are already built
+- `./bff/oauth-agent/gradlew -p ./bff/oauth-agent/ bootJar` to build the spring-boot service and `podman play kube bff/pod.yml --net foo --context-dir=./bff --build=true` to build and run the BFF image or simply `podman play kube bff/pod.yml --net foo` if images are already built
 
 `podman run --rm -d --name spa --net foo -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check`  
 ### develop
