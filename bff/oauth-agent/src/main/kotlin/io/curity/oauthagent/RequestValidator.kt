@@ -47,8 +47,15 @@ class RequestValidator(
             throw UnauthorizedException("No CSRF cookie was supplied in a POST request")
         }
 
-        val decryptedCsrf = cookieEncrypter.decryptValueFromCookie(csrfCookie)
-        if (decryptedCsrf != csrfHeader)
+        /*
+          There are multiple strategies to implement CSRF protection mechanism.
+          - a common simple approach is to use the value of a cookie readable from Javascript.
+          Javascript frameworks such as Angular automatically replicate a specific cookie into a specific header.
+          - another approach is to use a HttpOnly cookie and to return the CSRF token in the response body, so the
+          SPA must explicitly store and set the CSRF header.
+         */
+//        val decryptedCsrf = cookieEncrypter.decryptValueFromCookie(csrfCookie)
+        if (csrfCookie != csrfHeader)
         {
             throw UnauthorizedException("The CSRF header did not match the CSRF cookie in a POST request")
         }
@@ -67,5 +74,5 @@ class RequestValidator(
 
 class ValidateRequestOptions(
     val requireTrustedOrigin: Boolean = true,
-    val requireCsrfHeader: Boolean = false
+    val requireCsrfHeader: Boolean = true
 )

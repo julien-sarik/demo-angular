@@ -45,7 +45,7 @@ spec:
     - name: ISSUER
       value: http://localhost:9080/realms/master
     - name: CLIENT_SECRET
-      value: o5rWC6xzzJB9fYOVjw97IAu2980haWTP
+      value: ZCgI4FDXuujuFPDDswuSdUmLfC74uZZr
     - name: CORS_ENABLED
       value: "false"
     - name: TOKEN_ENDPOINT

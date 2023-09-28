@@ -107,7 +107,10 @@ class CookieEncrypter(private val config: OAuthAgentConfiguration, private val c
             builder.append("; Secure")
         }
 
-        builder.append("; HttpOnly")
+        if (options.httpOnly)
+        {
+            builder.append("; HttpOnly")
+        }
 
         if (options.sameSite)
         {
