@@ -2,7 +2,8 @@ _format_version: '3.0'
 _transform: true
 
 services:
-# the static files of the SPA are loaded through the BFF gateway
+# the static files of the SPA are loaded through the BFF gateway to avoid implementing CORS protection
+# a production deployment will deploy CDN to serve the SPA's static content
 - name: webhost
   url: http://spa:4200
   routes:
