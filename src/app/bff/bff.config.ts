@@ -1,5 +1,5 @@
 export const bffConfig: BffConfig = {
-    url: 'http://localhost:8080/oauth-agent'
+    url: '/oauth-agent'
 };
   
 export declare abstract class BffConfig {
