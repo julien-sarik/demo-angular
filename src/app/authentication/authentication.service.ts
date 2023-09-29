@@ -11,7 +11,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   get userName(): string {
-        const claims = sessionStorage.getItem('claims');
+    const claims = sessionStorage.getItem('claims');
     return claims != null ? JSON.parse(claims)['preferred_username']: '';
   }
 
