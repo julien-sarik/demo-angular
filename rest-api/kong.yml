@@ -4,7 +4,16 @@ services:
 - name: rest-api
   url: http://localhost:3000
   plugins:
+  - name: file-log
+    config:
+      path: /dev/stdout
+      # log Authorization header for debug purpose
+      # custom_fields_by_lua:
+      #   x-original-authorization: "return kong.request.get_header('authorization')"
   - name: jwt
+    config:
+       claims_to_verify:
+         - exp
   routes:
   - name: my-route
     paths:

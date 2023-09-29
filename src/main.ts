@@ -6,14 +6,16 @@ import { bootstrapApplication,provideProtractorTestingSupport } from '@angular/p
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import routeConfig from './app/routes';
-import { provideHttpClient, withXsrfConfiguration } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from "@angular/common/http";
+import { httpInterceptorProviders } from './app/http/htto-interceptors.provider';
 
 bootstrapApplication(AppComponent,
   {
     providers: [
       provideProtractorTestingSupport(),
       provideRouter(routeConfig),
-      provideHttpClient(withXsrfConfiguration({cookieName: 'example-csrf', headerName: 'X-example-csrf'})),
+      httpInterceptorProviders,
+      provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({cookieName: 'example-csrf', headerName: 'X-example-csrf'})),
     ]
   }
 ).catch(err => console.error(err));

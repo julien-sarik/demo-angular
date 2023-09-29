@@ -17,12 +17,12 @@ import { AuthenticationService } from '../authentication/authentication.service'
   <div *ngIf="authenticationService.userName">
     <p>Hello {{ authenticationService.userName }}</p>
     <p>
-      <button (click)="authenticationService.logout()">Logout</button>
+      <button (click)="authenticationService.logout().subscribe()">Logout</button>
     </p>
   </div>
   <div *ngIf="!authenticationService.userName">      
     <p>
-      <button (click)="authenticationService.login()">Login</button>
+      <button (click)="authenticationService.login().subscribe()">Login</button>
     </p>
   </div>
 
