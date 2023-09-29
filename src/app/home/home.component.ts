@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
   constructor(private housingService: HousingService, readonly authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
+    if (!this.authenticationService.isAuthenticated) {
+      return
+    }
     this.housingService.getAllHousingLocations().subscribe((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredLocationList = housingLocationList;

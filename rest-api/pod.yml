@@ -15,7 +15,7 @@ spec:
       value: 0.0.0.0:8000
     - name: KONG_DECLARATIVE_CONFIG
       value: kong.yml
-    image: docker.io/library/kong:3.3.1-alpine
+    image: localhost/kong:latest
     name: kong
     volumeMounts:
     - mountPath: /kong.yml

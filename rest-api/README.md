@@ -7,7 +7,7 @@ The mock server and the Kong gateway are running in the same pod.
 
 # run
 Run the Kong gateway into a pod:  
-`podman run --rm -d --pod new:rest-api  --name kong --net foo -e "KONG_DATABASE=off" -e KONG_DECLARATIVE_CONFIG=kong.yml -e "KONG_PROXY_LISTEN=0.0.0.0:8000" -v ${PWD}/rest-api/kong.yml:/kong.yml docker.io/kong:3.3.1-alpine`
+`podman run --rm -d --pod new:rest-api  --name kong --net foo -e "KONG_DATABASE=off" -e KONG_DECLARATIVE_CONFIG=kong.yml -e "KONG_PROXY_LISTEN=0.0.0.0:8000" -v ${PWD}/rest-api/kong.yml:/kong.yml localhost/kong:latest`
 Run the mock server in the previously created pod:  
 `podman run --rm -d --pod rest-api --name rest rest-api:latest`
 
