@@ -10,6 +10,10 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
+  get isAuthenticated(): boolean {
+    return sessionStorage.getItem('claims') !== null
+  }
+
   get userName(): string {
     const claims = sessionStorage.getItem('claims');
     return claims != null ? JSON.parse(claims)['preferred_username']: '';
