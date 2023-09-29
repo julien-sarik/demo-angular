@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -44,10 +44,8 @@ import { HousingLocation } from '../housinglocation';
   `,
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
 
-  route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
   applyForm = new FormGroup({
     firstName: new FormControl(''),
@@ -55,7 +53,9 @@ export class DetailsComponent {
     email: new FormControl('')
   });
   
-  constructor() {
+  constructor(private route: ActivatedRoute, private housingService: HousingService) {}
+
+  ngOnInit(): void {
     const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
     this.housingService.getHousingLocationById(housingLocationId).subscribe(housingLocation => {
       this.housingLocation = housingLocation;

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../housinglocation';
@@ -49,13 +49,13 @@ import { AuthenticationService } from '../authentication/authentication.service'
 `,
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   housingLocationList: HousingLocation[] = [];
   filteredLocationList: HousingLocation[] = [];
-  readonly housingService: HousingService = inject(HousingService);
-  readonly authenticationService: AuthenticationService = inject(AuthenticationService);
   
-  constructor() {
+  constructor(private housingService: HousingService, readonly authenticationService: AuthenticationService) {}
+
+  ngOnInit(): void {
     this.housingService.getAllHousingLocations().subscribe((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredLocationList = housingLocationList;
