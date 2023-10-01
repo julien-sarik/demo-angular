@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { bffConfig } from '../bff/bff.config';
 import { mergeMap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-oauth-callback',
@@ -24,10 +24,10 @@ export class OauthCallbackComponent implements OnInit {
     const authCode = JSON.stringify({pageUrl: this.router.url});
     const headers = new HttpHeaders().set("Content-Type", "application/json");
     // send the auth code to the bff so it can perform the code exchange and set cookies
-    this.http.post<string>(`${bffConfig.url}/login/end`, authCode, {headers})
+    this.http.post<string>(`${environment.oauthAgentUrl}/login/end`, authCode, {headers})
       .pipe(
         // once the user is authenticated, request the ID token claims
-        mergeMap(() => this.http.get<string>(`${bffConfig.url}/claims`))
+        mergeMap(() => this.http.get<string>(`${environment.oauthAgentUrl}/claims`))
       )
       .subscribe(resp => {
         // store the ID token claims
