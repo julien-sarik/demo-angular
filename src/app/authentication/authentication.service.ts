@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private window: Window) {}
 
   get isAuthenticated(): boolean {
     return sessionStorage.getItem('claims') !== null
@@ -22,7 +22,7 @@ export class AuthenticationService {
   login() {
     return this.http.post<any>(`${environment.oauthAgentUrl}/login/start`, null)
       // redirect the browser using global native browser window object
-      .pipe(map((resp: any) => window.location.href = resp['authorizationRequestUrl']))
+      .pipe(map((resp: any) => this.window.location.href = resp['authorizationRequestUrl']))
   }
 
   logout() {
@@ -30,7 +30,7 @@ export class AuthenticationService {
     sessionStorage.clear();
     return this.http.post<any>(`${environment.oauthAgentUrl}/logout`, null)
       // redirect the user to the configured auth server's logout endpoint
-      .pipe(map((resp: any) => window.location.href = resp['url']))
+      .pipe(map((resp: any) => this.window.location.href = resp['url']))
   }
 
   refresh() {

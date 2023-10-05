@@ -50,6 +50,8 @@ First run the following dependencies (stop with `podman play kube pod.yml --down
 `podman run --rm -d --name spa --net foo -v ${PWD}/src:/my-app/src angular:latest ng serve --host 0.0.0.0 --disable-host-check --configuration development`  
 ### develop
 Invoke Angular CLI from a container by prefixing commands with `podman run --rm -v ${PWD}:/my-app angular:latest `
+### test
+`ng test --browsers ChromeHeadlessNoSandbox`
 
 # architecture
 ```mermaid

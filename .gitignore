@@ -1,4 +1,5 @@
 .vscode
+.angular
 /node_modules
 .gradle/
 build/
